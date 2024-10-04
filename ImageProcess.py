@@ -45,19 +45,19 @@ def findBoard(image):
             continue
         x, y, w, h = cv2.boundingRect(contour)
 
-        # if(gray[y][x] != 255): #top left corner of contour isn't white
-        #     continue
+        if(gray[y-1][x-1] < 230): #top left corner of contour isn't white
+            continue
 
         # Crop the region containing the letter
         letter_image = thresh[y:y+h, x:x+w]
 
         # Apply OCR to the cropped letter
-        text = pytesseract.image_to_string(letter_image, config='-c tessedit_char_whitelist=ABCDEFGHIJKLMNOPQRSTUVWXYZ --psm 7 preserve_interword_spaces=1')  # '--psm 10' treats it as a single character
-        if text.strip() == '' or len(text.strip()) > 1:
-            letter_image = thresh[y-5:y+h+5, x-5:x+w+5]
+        text = pytesseract.image_to_string(letter_image, config='-c tessedit_char_whitelist=ABCDEFGHIJKLMNOPQRSTUVWXYZ --psm 10 preserve_interword_spaces=1')  # '--psm 10' treats it as a single character
+        if text.strip() == '' or len(text.strip()) > 1: # the contour around certain letters such as 'I' is too close, increase the contour box and retry
+            letter_image = thresh[y-2:y+h+2, x-2:x+w+2]
             text = pytesseract.image_to_string(letter_image, config='-c tessedit_char_whitelist=ABCDEFGHIJKLMNOPQRSTUVWXYZ --psm 7 preserve_interword_spaces=1')  # '--psm 10' treats it as a single character
 
-        letters.append(text.strip())
+        letters.append((x,y,text.strip()))
 
         # Optional: Draw bounding box on original image for debugging
         cv2.rectangle(gray, (x, y), (x + w, y + h), (0, 255, 0), 2)
