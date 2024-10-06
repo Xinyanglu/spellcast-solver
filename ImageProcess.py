@@ -25,12 +25,8 @@ def findBoard(image):
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     gray = cv2.resize(gray, (250,250))
     
-    # blur = cv2.GaussianBlur(gray,(3,3),0)
     thresh = cv2.adaptiveThreshold(gray,255,cv2.ADAPTIVE_THRESH_MEAN_C,\
             cv2.THRESH_BINARY,33,10)
-    
-    # rect_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (30, 10))
-    # threshed = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, rect_kernel)
 
     contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     
@@ -49,18 +45,18 @@ def findBoard(image):
             continue
 
         # Crop the region containing the letter
-        letter_image = thresh[y:y+h, x:x+w]
+        letter_image = gray[y:y+h, x:x+w]
 
         # Apply OCR to the cropped letter
-        text = pytesseract.image_to_string(letter_image, config='-c tessedit_char_whitelist=ABCDEFGHIJKLMNOPQRSTUVWXYZ --psm 10 preserve_interword_spaces=1')  # '--psm 10' treats it as a single character
+        text = pytesseract.image_to_string(letter_image, config='-c tessedit_char_whitelist=ABCDEFGHIJKLMNOPQRSTUVWXYZ --psm 10') 
         if text.strip() == '' or len(text.strip()) > 1: # the contour around certain letters such as 'I' is too close, increase the contour box and retry
-            letter_image = thresh[y-2:y+h+2, x-2:x+w+2]
-            text = pytesseract.image_to_string(letter_image, config='-c tessedit_char_whitelist=ABCDEFGHIJKLMNOPQRSTUVWXYZ --psm 7 preserve_interword_spaces=1')  # '--psm 10' treats it as a single character
+            letter_image = gray[y-3:y+h+3, x-3:x+w+3]
+            text = pytesseract.image_to_string(letter_image, config='-c tessedit_char_whitelist=ABCDEFGHIJKLMNOPQRSTUVWXYZ -l eng --psm 13') 
 
         letters.append((x,y,text.strip()))
 
         # Optional: Draw bounding box on original image for debugging
-        cv2.rectangle(gray, (x, y), (x + w, y + h), (0, 255, 0), 2)
+        cv2.rectangle(gray, (x-3, y-3), (x+3 + w, y+3 + h), (0, 255, 0), 2)
 
     print(letters)
 
