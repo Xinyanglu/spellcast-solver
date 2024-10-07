@@ -55,13 +55,9 @@ def findBoard(image):
 
         letters.append((x,y,text.strip()))
 
-        # Optional: Draw bounding box on original image for debugging
-        cv2.rectangle(gray, (x-3, y-3), (x+3 + w, y+3 + h), (0, 255, 0), 2)
-
     letters = sorted(letters, key= lambda x: x[0]/5 + x[1]) # sort by Y first, then by X. Divide 5 for 5 elements per row
 
     letters = [x[2] for x in letters]
-    print(letters)
 
     printBoard(letters)
 
@@ -71,7 +67,7 @@ def printBoard(board):
     row = ""
     for i in range(5):
         for j in range(5):
-            row += board[i*5+j]
+            row += board[i*5+j] + " "
         print(row)
         row = ""
 
