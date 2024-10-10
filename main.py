@@ -1,10 +1,10 @@
-import Engine
-import ImageProcess
+import engine
+import imageprocess
 import PyQt5
 
 
 def main():
-    ImageProcess.findBoard(image=ImageProcess.getImageFromClipboard())
+    imageprocess.findBoard(image=imageprocess.getImageFromClipboard())
     
 if __name__ == "__main__":
     main()
