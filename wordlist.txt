@@ -1,5 +1,3 @@
-a
-aa
 aah
 aalii
 aardvark
@@ -49,7 +47,6 @@ abatises
 abattoir
 abattoirs
 abaxial
-abb
 abba
 abbacies
 abbacy
@@ -48688,7 +48685,6 @@ hysterics
 hysterogenic
 hysteroid
 hysterotomy
-i
 iamb
 iambi
 iambic

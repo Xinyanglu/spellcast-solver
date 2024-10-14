@@ -1,6 +1,5 @@
-import engine
+import solver
 import imageprocess
-import PyQt5
 
 
 def main():
