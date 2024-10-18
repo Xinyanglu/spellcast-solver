@@ -65,11 +65,13 @@ def findBestPath(board, trie):
     # DFS to find all possible words
     for row in range(5):
         for col in range(5):
-            frontier.append(Path().visited(row,col))
-            frontier[0].word = board[row][col]
-            frontier[0].score = points[board[row][col]]
-            frontier[0].visited.add((row,col))
-            frontier[0].visitedOrder.append((row,col))
+            currentPath = Path()
+            currentPath.word = board[row][col]
+            currentPath.score = points[board[row][col]]
+            currentPath.visited.add((row,col))
+            currentPath.visitedOrder.append((row,col))
+
+            frontier.append(currentPath)
 
             while len(frontier) != 0:
                 currentPath = frontier.pop()
@@ -90,17 +92,19 @@ def findBestPath(board, trie):
                         continue
                     if direction in currentPath.visited:
                         continue
-                    newWord = currentPath.word + board[direction[0]][direction[1]]
+                    newWord = currentPath.word + board[direction[1]][direction[0]]
                     if not trie.startsWith(newWord):
                         continue
-                    if trie.search(newWord):
+                    if trie.search(currentPath.word):
                         if maxPath is None or currentPath.score > maxPath.score:
                             maxPath = currentPath
                     newPath = Path()
                     newPath.word = newWord
-                    newPath.visited = set(currentPath.visited).add(direction)
-                    newPath.visitedOrder = list(currentPath.visitedOrder).append(direction)
-                    newPath.score = currentPath.score + points[board[direction[0]][direction[1]]]
+                    newPath.visited = set(currentPath.visited)
+                    newPath.visited.add(direction)
+                    newPath.visitedOrder = list(currentPath.visitedOrder)
+                    newPath.visitedOrder.append(direction)
+                    newPath.score = scoreWord(newWord)
 
                     frontier.append(newPath)
 

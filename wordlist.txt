@@ -24006,7 +24006,6 @@ culver
 culverin
 culvert
 culverts
-cum
 cumber
 cumbered
 cumbering
@@ -24020,8 +24019,6 @@ cumbrousness
 cumin
 cummerbund
 cummerbunds
-cumming
-cums
 cumshaw
 cumulate
 cumulated
@@ -36378,14 +36375,9 @@ faff
 faffed
 faffing
 faffs
-fag
 fagaceous
 fagged
 fagging
-fagot
-fagoting
-fagots
-fags
 fahlband
 faience
 fail
