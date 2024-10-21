@@ -109,3 +109,11 @@ def findBestPath(board, trie):
                     frontier.append(newPath)
 
     return maxPath
+
+def findBestWord(board):
+    trie = createTrie()
+    bestPath = findBestPath(board, trie)
+    for i, position in enumerate(bestPath.visitedOrder):
+        board[position[1]][position[0]] = i+1
+
+    return bestPath.word

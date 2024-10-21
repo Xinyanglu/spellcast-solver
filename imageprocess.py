@@ -59,15 +59,14 @@ def findBoard(image):
 
     letters = [x[2] for x in letters]
 
-    printBoard(letters)
-
+    return np.reshape(letters, (5,5))
 
 
 def printBoard(board):
     row = ""
     for i in range(5):
         for j in range(5):
-            row += board[i*5+j] + " "
+            row += board[j][i] + " "
         print(row)
         row = ""
 

@@ -1,4 +1,4 @@
-from solver import Trie, createTrie, findBestPath
+from solver import Trie, createTrie, findBestPath, findBestWord
 import unittest
 
 class TestTrie(unittest.TestCase):
@@ -39,9 +39,24 @@ class TestTrie(unittest.TestCase):
                  ['u','v','w','x','y']]
         
         bestPath = findBestPath(board, trie)
-        print(bestPath.word)
-        print(bestPath.visitedOrder)
         self.assertEqual(bestPath.word, 'absolute')
+
+    def test_findBestWord(self):
+        board = [['a','b','c','d','e'],
+                 ['f','g','s','i','j'],
+                 ['e','l','m','o','o'],
+                 ['t','u','l','s','t'],
+                 ['u','v','w','x','y']]
+        
+        resultBoard = [[1,2,'c','d','e'],
+                       ['f','g',3,'i','j'],
+                       [8,'l','m',4,'o'],
+                       [7,6,5,'s','t'],
+                       ['u','v','w','x','y']]
+        
+        bestWord = findBestWord(board)
+        self.assertEqual(bestWord, 'absolute')
+        self.assertEqual(board, resultBoard)
 
 if __name__ == "__main__":
     unittest.main()
